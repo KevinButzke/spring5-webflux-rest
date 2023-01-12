@@ -4,13 +4,18 @@ import guru.springframework.spring5webfluxrest.domain.Category;
 import guru.springframework.spring5webfluxrest.repositories.CategoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@AutoConfigureWebTestClient
 class CategoryControllerTest {
 
     WebTestClient webTestClient;
@@ -22,6 +27,8 @@ class CategoryControllerTest {
 
     @BeforeEach
     void setUp() throws Exception {
+        categoryRepository = Mockito.mock(CategoryRepository.class);
+        categoryController = new CategoryController(categoryRepository);
         webTestClient = WebTestClient.bindToController(categoryController).build();
     }
 
@@ -41,6 +48,6 @@ class CategoryControllerTest {
                 .uri("/api/v1/categories/someid")
                 .exchange()
                 .expectBodyList(Category.class)
-                .hasSize(2);
+                .hasSize(1);
     }
 }

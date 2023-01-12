@@ -27,9 +27,6 @@ repositories {
 	maven { url "https://repo.spring.io/milestone" }
 }
 
-test {
-	useJUnitPlatform()
-}
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	compile('org.springframework.boot:spring-boot-starter-webflux')
@@ -39,4 +36,8 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo')
 	testCompile('io.projectreactor:reactor-test')
+}
+
+test {
+	useJUnitPlatform()
 }
